@@ -1,5 +1,6 @@
-package br.com.fiap.producer.sender
+package br.com.fiap.producer.sender.kafka
 
+import br.com.fiap.producer.sender.TopicMessageSender
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -7,16 +8,12 @@ import org.springframework.kafka.support.SendResult
 import org.springframework.util.concurrent.ListenableFutureCallback
 
 @Component
-class KafkaMessageSender {
+class KafkaMessageSender : TopicMessageSender {
 
     @Autowired
     private lateinit var kafkaTemplate: KafkaTemplate<String, String>
 
-    fun sendSyncMessage(topicName: String, msg: String) {
-        kafkaTemplate.send(topicName, msg)
-    }
-
-    fun sendAsyncMessage(topicName: String, message: String) {
+    override fun sendMessage(topicName: String, message: String) {
 
         val future = kafkaTemplate.send(topicName, message)
 
