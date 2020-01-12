@@ -20,6 +20,7 @@ class CsvParser : FileParser<FileLayout> {
         val cb = CsvToBeanBuilder<FileLayout>(reader)
             .withType(beanType)
             .withMappingStrategy(ms)
+            .withSkipLines(1)
             .build()
 
         val entries = cb.parse()
