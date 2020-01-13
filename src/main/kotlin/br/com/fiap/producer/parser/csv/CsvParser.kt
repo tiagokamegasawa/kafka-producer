@@ -16,12 +16,13 @@ class CsvParser : FileParser<FileLayout> {
         val ms = ColumnPositionMappingStrategy<FileLayout>()
         ms.type = beanType
 
-        val reader = Files.newBufferedReader(Path.of(path))
-        val cb = CsvToBeanBuilder<FileLayout>(reader)
-            .withType(beanType)
-            .withMappingStrategy(ms)
-            .withSkipLines(1)
-            .build()
+        val reader = Files.newBufferedReader(Path.of(path).toAbsolutePath())
+        val cb = CsvToBeanBuilder<FileLayout>(reader).withSeparator(';').
+                withIgnoreQuotations(true)
+                .withType(beanType)
+                .withMappingStrategy(ms)
+                .withSkipLines(1)
+                .build()
 
         val entries = cb.parse()
         reader.close()
