@@ -18,6 +18,7 @@ class CsvParser : FileParser<FileLayout> {
 
         val reader = Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource(path).toURI()))
         val cb = CsvToBeanBuilder<FileLayout>(reader)
+                .withSeparator(';')
                 .withIgnoreQuotations(true)
                 .withType(beanType)
                 .withMappingStrategy(ms)
