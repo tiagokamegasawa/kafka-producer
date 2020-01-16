@@ -5,6 +5,8 @@ import br.com.fiap.producer.parser.vo.FileLayout
 import br.com.fiap.producer.sender.TopicMessageSender
 import com.google.gson.GsonBuilder
 import org.springframework.beans.factory.annotation.Value
+import org.springframework.context.ApplicationContext
+import org.springframework.core.io.ResourceLoader
 import org.springframework.stereotype.Service
 
 @Service
@@ -17,7 +19,8 @@ class BolsaFamiliaService (
 ) {
 
     fun sendFileToTopic() {
-        val path = "/Users/Gabriel/Downloads/201911_BolsaFamilia_Pagamentos.csv"
+
+        val path = "bolsafamilia/201901_BolsaFamilia_Pagamentos.csv"
         val entries = fileParser.parseFile(path, FileLayout::class.java)
         for (entry in entries) {
             topicMessageSender.sendMessage(bolsaFamiliaTopic, GsonBuilder().create().toJson(entry))
