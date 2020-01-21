@@ -17,7 +17,7 @@ class BolsaFamiliaService (
 ) {
 
     fun sendFileToTopic() {
-        val path = "/Users/Gabriel/Downloads/201911_BolsaFamilia_Pagamentos.csv"
+        val path = "bolsafamilia/201901_BolsaFamilia_Pagamentos.csv"
         val entries = fileParser.parseFile(path, FileLayout::class.java)
         for (entry in entries) {
             topicMessageSender.sendMessage(bolsaFamiliaTopic, GsonBuilder().create().toJson(entry))
