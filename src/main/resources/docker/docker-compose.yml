@@ -1,0 +1,38 @@
+version: '3.7'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181"
+    hostname: zookeeper
+  kafka:
+    image: wurstmeister/kafka
+    command: [start-kafka.sh]
+    ports:
+      - "9092:9092"
+    hostname: kafka
+    environment:
+      KAFKA_CREATE_TOPICS: "BOLSA_FAMILIA:1:1" # topic:partition:replicas
+      KAFKA_ADVERTISED_HOST_NAME: kafka # docker-machine ip
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_PORT: 9092
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - "zookeeper"
+ 
+  
+  producer:
+    image: tiagokamegasawa/producer:0.0.1
+    ports:
+      - "8081:8081"
+    links:
+      - kafka:kafka
+    deploy:
+      replicas: 1
+    environment:
+      KAFKA_HOST: kafka:9092
+      TOPIC_BOLSA: BOLSA_FAMILIA
+      KAFKA_GROUP_ID: br.com.fiap.producer
+    depends_on:
+      - kafka
