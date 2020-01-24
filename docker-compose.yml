@@ -36,3 +36,18 @@ services:
       KAFKA_GROUP_ID: br.com.fiap.producer
     depends_on:
       - kafka
+
+  consumidor-one:
+    image: goncalvesgabrielsilva/consumer-one:0.0.1
+    ports:
+      - "8080:8080"
+    links:
+      - kafka:kafka
+    deploy:
+      replicas: 1
+    environment:
+      KAFKA_HOST: kafka:9092
+      TOPIC_BOLSA: BOLSA_FAMILIA
+      KAFKA_GROUP_ID: br.com.fiap.consumerone
+    depends_on:
+      - kafka
