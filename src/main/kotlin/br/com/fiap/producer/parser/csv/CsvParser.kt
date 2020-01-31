@@ -16,7 +16,7 @@ class CsvParser : FileParser<FileLayout> {
         val ms = ColumnPositionMappingStrategy<FileLayout>()
         ms.type = beanType
 
-        val reader = Files.newBufferedReader(Paths.get(ClassLoader.getSystemResource(path).toURI()))
+        val reader = Files.newBufferedReader(Paths.get(path).toAbsolutePath())
         val cb = CsvToBeanBuilder<FileLayout>(reader)
                 .withSeparator(';')
                 .withIgnoreQuotations(true)
@@ -29,6 +29,5 @@ class CsvParser : FileParser<FileLayout> {
         reader.close()
         return entries
     }
-
 
 }

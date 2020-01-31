@@ -13,11 +13,18 @@ class BolsaFamiliaService (
     private val topicMessageSender: TopicMessageSender,
 
     @Value(value = "\${topic.bolsaFamilia}")
-    private val bolsaFamiliaTopic: String
+    private val bolsaFamiliaTopic: String,
+
+    @Value(value = "\${file.path}")
+    private val filePath: String,
+
+    @Value(value = "\${file.name}")
+    private val fileName: String
+
 ) {
 
     fun sendFileToTopic() {
-        val path = "bolsafamilia/201901_BolsaFamilia_Pagamentos.csv"
+        val path = "${filePath}${fileName}"
         val entries = fileParser.parseFile(path, FileLayout::class.java)
         for (entry in entries) {
             topicMessageSender.sendMessage(bolsaFamiliaTopic, GsonBuilder().create().toJson(entry))
