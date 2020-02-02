@@ -34,8 +34,8 @@ services:
       KAFKA_HOST: kafka:9092
       TOPIC_BOLSA: BOLSA_FAMILIA
       KAFKA_GROUP_ID: br.com.fiap.producer
-      FILE_PATH: {FILE_PATH}
-      FILE_NAME: {FILE_NAME}
+      FILE_PATH: ${FILE_PATH}
+      FILE_NAME: ${FILE_NAME}
     volumes:
       - ${FILE_PATH}/${FILE_NAME}:${FILE_PATH}/${FILE_NAME}
     depends_on:
