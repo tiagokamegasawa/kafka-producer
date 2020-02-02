@@ -12,11 +12,11 @@ e enviar os registros para um tópico do kafka.
 - Docker
 
 #### Configurações do Producer
-- Devem ser editadas as seguintes variávies no arquivo docker-compose.yml. 
+- Devem ser editadas as seguintes variávies no arquivo **docker-compose.yml**. 
     - TOPIC_BOLSA: Nome do topic de onde serão postadas as mensagens. Por default vem com o nome BOLSA_FAMILIA.
     - KAFKA_HOST: Host onde está disponível o serviço do kafka, incluindo a porta. Por default o arquivo está configurado para acessar a imagem que também será instânciada pelo arquivo docker-compose.yml
 
-- Também devem ser alteradas as variáveis de ambiente no arquivo .env com o caminho e o nome do arquivo do bolsa família **que se encontra no diretório src/main/resources/bolsafamilia/ do projeto**:
+- Também devem ser alteradas as variáveis de ambiente no arquivo **.env** com o caminho e o nome do arquivo do bolsa família **que se encontra no diretório src/main/resources/bolsafamilia/ do projeto**:
     - FILE_PATH: **Path absoluto** de acesso ao arquivo do bolsa familia.
     - FILE_NAME: Nome do arquivo para o kafka-producer.
 
