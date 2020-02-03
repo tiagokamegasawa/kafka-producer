@@ -55,3 +55,31 @@ services:
       KAFKA_GROUP_ID: br.com.fiap.consumerone
     depends_on:
       - kafka
+
+  consumidor-two:
+    image: dribeirodocker/kafkajavaapplication
+    ports:
+      - "8082:8082"
+    deploy:
+      replicas: 1
+    environment:
+      KAFKA_HOST: kafka:9092
+      TOPIC_BOLSA: BOLSA_FAMILIA
+      KAFKA_GROUP_ID: br.com.fiap.consumidortwo
+    depends_on:
+      - kafka
+
+  consumidor-three:
+    image: ronaldoleite/consumidor-three:0.0.1
+    ports:
+      - "8083:8083"
+    links:
+      - kafka:kafka
+    deploy:
+      replicas: 1
+    environment:
+      KAFKA_HOST: kafka:9092
+      TOPIC_BOLSA: BOLSA_FAMILIA
+      KAFKA_GROUP_ID: br.com.fiap.consumerthree
+    depends_on:
+      - kafka
